@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ConferenceDTO;
 using FrontEnd.Services;
@@ -14,6 +15,13 @@ namespace FrontEnd.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         protected readonly IApiClient _apiClient;
+
+        [TempData]
+        public string Message { get; set; }
+
+        public bool ShowMessage => !string.IsNullOrEmpty(Message);
+
+        public bool IsAdmin { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, IApiClient apiClient)
         {
@@ -31,6 +39,8 @@ namespace FrontEnd.Pages
 
         public async Task OnGet(int day = 0)
         {
+            IsAdmin = User.IsAdmin();
+
             CurrentDayOffset = day;
 
             var sessions = await _apiClient.GetSessionsAsync();

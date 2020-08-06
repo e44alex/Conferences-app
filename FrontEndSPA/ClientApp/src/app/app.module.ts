@@ -17,8 +17,7 @@ import { SessionsComponent } from './sessions/sessions.component';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    SessionsComponent,
-    DataService
+    SessionsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -52,6 +52,9 @@ namespace BackEnd
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Conference Planner API", Version = "v1" });
             });
+
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +73,8 @@ namespace BackEnd
             app.UseAuthorization();
 
             app.UseSwagger();
+
+            app.UseCors(builder => builder.AllowAnyOrigin());
 
             app.UseSwaggerUI(options =>
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Conference Planner API v1")

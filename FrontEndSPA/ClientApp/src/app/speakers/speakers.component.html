@@ -1,0 +1,24 @@
+<h1 class="title">
+  Speakers list
+</h1>
+
+<div class="card-columns">
+  <div class="card" *ngFor="let speaker of speakers">
+    <div class="card-header">
+      <a [routerLink]="['/speaker', speaker.id]">
+        <h4 class="card-title">{{speaker.name}}</h4>
+      </a>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{speaker.bio}}</p>
+      <br>
+      <a href={{speaker.webSite}}>Web Site: {{speaker.webSite}} </a>
+    </div>
+    <div class="card-footer">
+      <div *ngFor="let session of speaker.sessions" class="card-footer">
+        <a [routerLink]="['/sessiondetail', session.id]">{{session.title}}</a>
+      </div>
+    </div>
+  </div>
+
+</div>

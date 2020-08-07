@@ -23,21 +23,19 @@ export class DataService {
   getSessions(): Promise<Session[]> {
     return new Promise((resolve, reject) => {
         const path = this.baseUrl + this.sessionUrl;
-        console.log(path);
-        this.http.get('https://localhost:44363/api/Sessions')
+        this.http.get('https://localhost:44363/' + this.sessionUrl)
         .subscribe( (data: Session[]) => {
-          console.log(data);
           return resolve(data);
         });
     });
   }
 
   getSession(id: number): Promise<Session> {
-    const url = `${this.baseUrl + this.sessionUrl}/${id}`;
+    const url = `${'https://localhost:44363/' + this.sessionUrl}/${id}`;
     return new Promise((resolve, reject) => {
-      const path = this.baseUrl + this.speakerUrl;
-      this.http.get(path)
+      this.http.get(url)
       .subscribe( (data: Session) => {
+        console.log(data);
         return resolve(data);
       });
     });
@@ -46,11 +44,10 @@ export class DataService {
   getSpeaker(id: number): Promise<Speaker> {
 
 
-    const url = `${this.baseUrl + this.speakerUrl}/${id}`;
+    const url = `${'https://localhost:44363/' + this.speakerUrl}/${id}`;
 
     return new Promise((resolve, reject) => {
-      const path = this.baseUrl + this.speakerUrl;
-      this.http.get(path)
+      this.http.get(url)
       .subscribe( (data: Speaker) => {
         return resolve(data);
       });
@@ -59,8 +56,7 @@ export class DataService {
 
   getSpeakers(): Promise<Speaker[]> {
     return new Promise((resolve, reject) => {
-      const path = this.baseUrl + this.speakerUrl;
-      this.http.get(path)
+      this.http.get('https://localhost:44363/' + this.speakerUrl)
       .subscribe( (data: Speaker[]) => {
         return resolve(data);
       });

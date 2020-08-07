@@ -9,6 +9,9 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { SessionsComponent } from './sessions/sessions.component';
+import { SessionDetailComponent } from './session-detail/session-detail.component';
+import { SpeakerDetailComponent } from './speaker-detail/speaker-detail.component';
+import { SpeakersComponent } from './speakers/speakers.component';
 
 
 
@@ -17,7 +20,10 @@ import { SessionsComponent } from './sessions/sessions.component';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    SessionsComponent
+    SessionsComponent,
+    SessionDetailComponent,
+    SpeakerDetailComponent,
+    SpeakersComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -25,7 +31,10 @@ import { SessionsComponent } from './sessions/sessions.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      {path: 'sessions', component: SessionsComponent}
+      { path: 'sessions', component: SessionsComponent},
+      { path: 'speakers', component: SpeakersComponent},
+      { path: 'sessiondetail/:id', component: SessionDetailComponent, pathMatch: 'full' },
+      { path: 'speaker/:id', component: SpeakerDetailComponent, pathMatch: 'full' }
     ])
   ],
   providers: [DataService],

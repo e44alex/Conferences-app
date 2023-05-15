@@ -27,11 +27,12 @@ namespace BackEnd.Controllers
         public async Task<ActionResult<List<SessionResponse>>> Get()
         {
             var sessions = await _context.Sessions.AsNoTracking()
-                                             .Include(s => s.Track)
-                                             .Include(s => s.SessionSpeakers)
-                                                .ThenInclude(ss => ss.Speaker)
-                                             .Select(m => m.MapSessionResponse())
-                                             .ToListAsync();
+                .Include(s => s.Track)
+                .Include(s => s.SessionSpeakers)
+                .ThenInclude(ss => ss.Speaker)
+                .Select(m => m.MapSessionResponse())
+                .ToListAsync();
+
             return sessions;
         }
 
@@ -39,10 +40,10 @@ namespace BackEnd.Controllers
         public async Task<ActionResult<SessionResponse>> Get(int id)
         {
             var session = await _context.Sessions.AsNoTracking()
-                                            .Include(s => s.Track)
-                                            .Include(s => s.SessionSpeakers)
-                                                .ThenInclude(ss => ss.Speaker)
-                                            .SingleOrDefaultAsync(s => s.Id == id);
+                .Include(s => s.Track)
+                .Include(s => s.SessionSpeakers)
+                .ThenInclude(ss => ss.Speaker)
+                .SingleOrDefaultAsync(s => s.Id == id);
 
             if (session == null)
             {
@@ -110,7 +111,6 @@ namespace BackEnd.Controllers
             return session.MapSessionResponse();
         }
 
-
         [HttpPost("upload")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Upload([FromForm] ConferenceFormat format, IFormFile file)
@@ -133,6 +133,7 @@ namespace BackEnd.Controllers
             {
                 return new SessionizeLoader();
             }
+
             return new DevIntersectionLoader();
         }
 

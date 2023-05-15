@@ -1,6 +1,6 @@
 import { Session } from "@/shared/types/Conference";
 import "bootstrap/dist/css/bootstrap.css";
-import './SessionCard.scss'
+import Link from "next/link";
 
 export type SessionCardProps = {
   session: Session;
@@ -9,9 +9,9 @@ export const SessionCard = ({ session }: SessionCardProps) => {
   return (
     <div className="card session-card">
       <div className="card-header">
-        <a>
+        <Link href="/sessions/[id]" as={`/sessions/${session.id}`}>
           <h4 className="card-title">{session.title}</h4>
-        </a>
+        </Link>
       </div>
       <div className="card-body">{session.abstract}</div>
       <div className="card-footer">

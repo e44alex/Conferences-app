@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using ConferenceDTO;
 
 namespace BackEnd.Data
 {

@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using ConferenceDTO;
 using Attendee = BackEnd.Data.Attendee;
 using Session = BackEnd.Data.Session;
 using Speaker = BackEnd.Data.Speaker;

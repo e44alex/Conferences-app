@@ -3,8 +3,9 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Backend.Common.Data;
 using GraphQL.Common.Loaders;
-using GraphQL.Common.Queries;
 using GraphQL.Common.Types;
+using GraphQL.Common.Types.Mutations;
+using GraphQL.Common.Types.Queries;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -48,12 +49,21 @@ namespace BackEnd
             services.AddSwaggerGen(options => { options.SwaggerDoc("v1", new OpenApiInfo { Title = "Conference Planner API", Version = "v1" }); });
 
             services.AddCors();
-
+            // ReSharper disable BadIndent
             services.AddGraphQLServer()
-                .AddQueryType<Query>()
-                .AddMutationType<Mutation>()
+                .AddQueryType(d => d.Name("Query"))
+                    .AddTypeExtension<SpeakerQueries>()
+                    .AddTypeExtension<SessionQueries>()
+                .AddMutationType(d => d.Name("Mutation"))
+                    .AddTypeExtension<SpeakerMutations>()
+                    .AddTypeExtension<SessionMutations>()
+                    .AddTypeExtension<TrackMutations>()
                 .AddType<SpeakerType>()
-                .AddDataLoader<SpeakerByIdLoader>()
+                .AddType<AttendeeType>()
+                .AddType<SessionType>()
+                .AddType<TrackType>()
+                .AddGlobalObjectIdentification()
+                .AddDataLoader<SpeakerByIdDataLoader>()
                 .AddDataLoader<SessionByIdDataLoader>();
         }
 

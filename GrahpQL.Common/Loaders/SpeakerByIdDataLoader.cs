@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GraphQL.Common.Loaders
 {
-    public class SpeakerByIdLoader : BatchDataLoader<int, Speaker>
+    public class SpeakerByIdDataLoader : BatchDataLoader<int, Speaker>
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public SpeakerByIdLoader
+        public SpeakerByIdDataLoader
         (
             IBatchScheduler batchScheduler,
             ApplicationDbContext dbContext,

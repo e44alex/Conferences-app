@@ -1,6 +1,6 @@
-﻿namespace GraphQL.Common.Models
+﻿namespace GraphQL.Common.Models.Input
 {
-    public record AddSpeakerInput
+    public record Speaker
     (
         string Name,
         string? Bio,

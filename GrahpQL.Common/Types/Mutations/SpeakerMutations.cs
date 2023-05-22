@@ -1,14 +1,16 @@
 ﻿using Backend.Common.Data;
-using GraphQL.Common.Models;
+using GraphQL.Common.Models.Payload;
 using HotChocolate;
+using HotChocolate.Types;
 
-namespace GraphQL.Common.Queries
+namespace GraphQL.Common.Types.Mutations
 {
-    public class Mutation
+    [ExtendObjectType("Mutation")]
+    public class SpeakerMutations
     {
         public async Task<AddSpeakerPayload> AddSpeakerAsync
         (
-            AddSpeakerInput input,
+            Models.Input.Speaker input,
             [Service(ServiceKind.Resolver)] ApplicationDbContext context)
         {
             var speaker = new Speaker

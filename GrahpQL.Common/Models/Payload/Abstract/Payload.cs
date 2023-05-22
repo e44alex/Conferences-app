@@ -1,4 +1,4 @@
-﻿namespace GraphQL.Common
+﻿namespace GraphQL.Common.Models.Payload.Abstract
 {
     public abstract class Payload
     {

@@ -1,6 +1,7 @@
 ﻿using Backend.Common.Data;
+using GraphQL.Common.Models.Payload.Base;
 
-namespace GraphQL.Common.Models
+namespace GraphQL.Common.Models.Payload
 {
     public class AddSpeakerPayload : SpeakerPayloadBase
     {

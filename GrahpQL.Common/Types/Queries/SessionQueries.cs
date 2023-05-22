@@ -1,27 +1,20 @@
 ﻿using Backend.Common.Data;
 using GraphQL.Common.Loaders;
 using HotChocolate;
+using HotChocolate.Types;
+using HotChocolate.Types.Relay;
 using Microsoft.EntityFrameworkCore;
 
-namespace GraphQL.Common.Queries
+namespace GraphQL.Common.Types.Queries
 {
-    public class Query
+    [ExtendObjectType("Query")]
+    public class SessionQueries
     {
-        public Task<List<Speaker>> GetSpeakers([Service(ServiceKind.Resolver)] ApplicationDbContext context) => context.Speakers.ToListAsync();
-
-        public Task<Speaker> GetSpeakerAsync
-        (
-            int id,
-            SpeakerByIdLoader dataLoader,
-            CancellationToken cancellationToken
-        ) =>
-            dataLoader.LoadAsync(id, cancellationToken);
-
         public Task<List<Session>> GetSessions([Service(ServiceKind.Resolver)] ApplicationDbContext context) => context.Sessions.ToListAsync();
 
         public Task<Session> GetSessionAsync
         (
-            int id,
+            [ID(nameof(Session))] int id,
             SessionByIdDataLoader dataLoader,
             CancellationToken cancellationToken
         ) =>

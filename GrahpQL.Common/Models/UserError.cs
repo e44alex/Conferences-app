@@ -1,4 +1,4 @@
-﻿namespace GraphQL.Common
+﻿namespace GraphQL.Common.Models
 {
     public class UserError
     {

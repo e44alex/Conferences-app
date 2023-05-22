@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Backend.Common.Data;
+using Backend.Common.DTO;
+using Backend.Common.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BackEnd.Data;
-using BackEnd.Infrastructure;
-using ConferenceDTO;
+using Session = Backend.Common.Data.Session;
 
 namespace BackEnd.Controllers
 {
@@ -51,9 +52,9 @@ namespace BackEnd.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<SessionResponse>> Post(ConferenceDTO.Session input)
+        public async Task<ActionResult<SessionResponse>> Post(Backend.Common.DTO.Session input)
         {
-            var session = new Data.Session
+            var session = new Session
             {
                 Title = input.Title,
                 StartTime = input.StartTime,
@@ -71,7 +72,7 @@ namespace BackEnd.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, ConferenceDTO.Session input)
+        public async Task<IActionResult> Put(int id, Backend.Common.DTO.Session input)
         {
             var session = await _context.Sessions.FindAsync(id);
 

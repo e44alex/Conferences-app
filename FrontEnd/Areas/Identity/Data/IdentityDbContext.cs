@@ -1,6 +1,7 @@
-﻿using FrontEnd.Data;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
-namespace FrontEnd.Data
+namespace FrontEnd.Areas.Identity.Data
 {
     public class IdentityDbContext : IdentityDbContext<User>
     {

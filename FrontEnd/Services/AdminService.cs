@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using FrontEnd.Data;
+using FrontEnd.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FrontEnd.Services
@@ -33,9 +34,9 @@ namespace FrontEnd.Services
                     if (await dbContext.Users.AnyAsync(user => user.IsAdmin))
                     {
                         _adminExists = true;
+
                         return false;
                     }
-
                 }
 
                 return true;

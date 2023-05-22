@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BackEnd.Data;
-using BackEnd.Infrastructure;
-using ConferenceDTO;
+using Backend.Common.Data;
+using Backend.Common.DTO;
+using Backend.Common.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

@@ -35,14 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConferenceDTO\ConferenceDTO.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="GraphQL\Models\" />
-    <Folder Include="GraphQL\Types\" />
-    <Folder Include="GraphQL\Queries\" />
-    <Folder Include="Extensions\" />
+    <ProjectReference Include="..\Backend.Common\Backend.Common.csproj" />
+    <ProjectReference Include="..\GrahpQL.Common\GraphQL.Common.csproj" />
   </ItemGroup>
 
 

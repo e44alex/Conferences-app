@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ConferenceDTO;
+using Backend.Common.DTO;
 
 namespace FrontEnd.Services
 {

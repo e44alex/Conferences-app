@@ -1,10 +1,10 @@
 using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using BackEnd.Data;
-using BackEnd.GraphQL.Loaders;
-using BackEnd.GraphQL.Queries;
-using BackEnd.GraphQL.Types;
+using Backend.Common.Data;
+using GraphQL.Common.Loaders;
+using GraphQL.Common.Queries;
+using GraphQL.Common.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +39,8 @@ namespace BackEnd
                 }
             });
 
-            services.AddScoped<ApplicationDbContext>(s => s.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
+            services.AddScoped<ApplicationDbContext>(s =>
+                s.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
 
             services.AddControllers()
                 .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });

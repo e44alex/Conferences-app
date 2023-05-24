@@ -64,6 +64,8 @@ namespace BackEnd
                 .AddType<SessionType>()
                 .AddType<TrackType>()
                 .AddGlobalObjectIdentification()
+                .AddFiltering()
+                .AddSorting()
                 .AddDataLoader<SpeakerByIdDataLoader>()
                 .AddDataLoader<SessionByIdDataLoader>();
         }

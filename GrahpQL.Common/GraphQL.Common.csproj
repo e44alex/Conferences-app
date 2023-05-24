@@ -7,11 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GreenDonut" Version="13.0.5" />
-    <PackageReference Include="HotChocolate.Abstractions" Version="13.0.5" />
-    <PackageReference Include="HotChocolate.Types" Version="13.0.5" />
-    <PackageReference Include="HotChocolate.Types.CursorPagination" Version="13.0.5" />
+    <PackageReference Include="GreenDonut" Version="13.1.0" />
+    <PackageReference Include="HotChocolate.Abstractions" Version="13.1.0" />
+    <PackageReference Include="HotChocolate.Data" Version="13.1.0" />
+    <PackageReference Include="HotChocolate.Types" Version="13.1.0" />
+    <PackageReference Include="HotChocolate.Types.CursorPagination" Version="13.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6" />
   </ItemGroup>
 
   <ItemGroup>

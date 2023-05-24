@@ -1,4 +1,5 @@
-﻿using HotChocolate.Types.Relay;
+﻿using HotChocolate.Data.Filters;
+using HotChocolate.Types.Relay;
 
 namespace GraphQL.Common.Models.Input
 {
@@ -16,4 +17,13 @@ namespace GraphQL.Common.Models.Input
         DateTimeOffset StartTime,
         DateTimeOffset EndTime
     );
+
+    public class SessionFilterInputType : FilterInputType<Backend.Common.Data.Session>
+    {
+        protected override void Configure(IFilterInputTypeDescriptor<Backend.Common.Data.Session> descriptor)
+        {
+            descriptor.Ignore(t => t.Id);
+            descriptor.Ignore(t => t.TrackId);
+        }
+    }
 }

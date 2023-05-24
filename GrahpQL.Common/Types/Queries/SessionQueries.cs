@@ -1,9 +1,10 @@
 ﻿using Backend.Common.Data;
 using GraphQL.Common.Loaders;
+using GraphQL.Common.Models.Input;
 using HotChocolate;
 using HotChocolate.Types;
 using HotChocolate.Types.Relay;
-using Microsoft.EntityFrameworkCore;
+using Session = Backend.Common.Data.Session;
 
 namespace GraphQL.Common.Types.Queries
 {
@@ -11,6 +12,8 @@ namespace GraphQL.Common.Types.Queries
     public class SessionQueries
     {
         [UsePaging(typeof(NonNullType<SessionType>))]
+        [UseFiltering(typeof(SessionFilterInputType))]
+        [UseSorting]
         public IQueryable<Session> GetSessions([Service(ServiceKind.Resolver)] ApplicationDbContext context) =>
             context.Sessions;
 

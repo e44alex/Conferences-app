@@ -11,3 +11,5 @@ A ASP.NET Web api with 2 front-end projects: Angular and Razor pages
 # Api Doc:
 ![Api swagger](https://github.com/e44alex/Conferences-app/blob/master/Pics/Api1.png)
 ![Api swagger](https://github.com/e44alex/Conferences-app/blob/master/Pics/Api2.png)
+
+New: added GraphQL api support

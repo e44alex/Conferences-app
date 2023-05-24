@@ -1,19 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using BackEnd.Data;
+using Backend.Common.Data;
+using GraphQL.Common.Loaders;
+using GraphQL.Common.Subscriptions;
+using GraphQL.Common.Types;
+using GraphQL.Common.Types.Mutations;
+using GraphQL.Common.Types.Queries;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace BackEnd
@@ -30,7 +29,7 @@ namespace BackEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddPooledDbContextFactory<ApplicationDbContext>(options =>
             {
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
@@ -42,19 +41,40 @@ namespace BackEnd
                 }
             });
 
+            services.AddScoped<ApplicationDbContext>(s =>
+                s.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
+
             services.AddControllers()
-                    .AddJsonOptions(options =>
-                    {
-                        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                    }); ;
+                .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
 
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Conference Planner API", Version = "v1" });
-            });
-
+            services.AddSwaggerGen(options => { options.SwaggerDoc("v1", new OpenApiInfo { Title = "Conference Planner API", Version = "v1" }); });
 
             services.AddCors();
+            // ReSharper disable BadIndent
+            services.AddGraphQLServer()
+                .AddQueryType(d => d.Name("Query"))
+                    .AddTypeExtension<SpeakerQueries>()
+                    .AddTypeExtension<SessionQueries>()
+                    .AddTypeExtension<TrackQueries>()
+                    .AddTypeExtension<AttendeeQueries>()
+                .AddMutationType(d => d.Name("Mutation"))
+                    .AddTypeExtension<SpeakerMutations>()
+                    .AddTypeExtension<SessionMutations>()
+                    .AddTypeExtension<TrackMutations>()
+                    .AddTypeExtension<AttendeeMutations>()
+                .AddSubscriptionType(d => d.Name("Subscription"))
+                    .AddTypeExtension<SessionSubscriptions>()
+                    .AddTypeExtension<AttendeeSubscriptions>()
+                .AddType<SpeakerType>()
+                .AddType<AttendeeType>()
+                .AddType<SessionType>()
+                .AddType<TrackType>()
+                .AddGlobalObjectIdentification()
+                .AddFiltering()
+                .AddSorting()
+                .AddInMemorySubscriptions()
+                .AddDataLoader<SpeakerByIdDataLoader>()
+                .AddDataLoader<SessionByIdDataLoader>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,9 +84,10 @@ namespace BackEnd
             {
                 app.UseDeveloperExceptionPage();
             }
-            
 
             app.UseHttpsRedirection();
+
+            app.UseWebSockets();
 
             app.UseRouting();
 
@@ -83,11 +104,13 @@ namespace BackEnd
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapGraphQL();
             });
 
             app.Run(context =>
             {
                 context.Response.Redirect("/swagger");
+
                 return Task.CompletedTask;
             });
         }

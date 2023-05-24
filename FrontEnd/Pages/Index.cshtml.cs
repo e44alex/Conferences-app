@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using ConferenceDTO;
+using Backend.Common.DTO;
+using FrontEnd.Infrastructure;
 using FrontEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -33,9 +33,7 @@ namespace FrontEnd.Pages
 
         public IEnumerable<(int Offset, DayOfWeek? DayOfWeek)> DayOffsets { get; set; }
 
-        public int CurrentDayOffset { get; set; }   
-
-        
+        public int CurrentDayOffset { get; set; }
 
         public async Task OnGet(int day = 0)
         {

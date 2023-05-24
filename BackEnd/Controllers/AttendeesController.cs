@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Backend.Common.Data;
+using Backend.Common.DTO;
+using Backend.Common.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BackEnd.Data;
-using BackEnd.Infrastructure;
-using ConferenceDTO;
+using Attendee = Backend.Common.Data.Attendee;
 
 namespace BackEnd.Controllers
 {
@@ -42,7 +41,7 @@ namespace BackEnd.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<ActionResult<AttendeeResponse>> Post(ConferenceDTO.Attendee input)
+        public async Task<ActionResult<AttendeeResponse>> Post(Backend.Common.DTO.Attendee input)
         {
             // Check if the attendee already exists
             var existingAttendee = await _context.Attendees
@@ -54,7 +53,7 @@ namespace BackEnd.Controllers
                 return Conflict(input);
             }
 
-            var attendee = new Data.Attendee
+            var attendee = new Attendee
             {
                 FirstName = input.FirstName,
                 LastName = input.LastName,

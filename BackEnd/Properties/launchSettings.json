@@ -20,7 +20,7 @@
     "BackEnd": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "",
+      "launchUrl": "/grahpql",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

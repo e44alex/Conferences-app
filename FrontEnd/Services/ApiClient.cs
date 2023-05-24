@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using ConferenceDTO;
+using Backend.Common.DTO;
 
 namespace FrontEnd.Services
 {

@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
-using FrontEnd.Data;
+using FrontEnd.Areas.Identity.Data;
+using FrontEnd.Infrastructure;
 using FrontEnd.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;

@@ -2,7 +2,9 @@
 using GraphQL.Common.Models;
 using GraphQL.Common.Models.Input;
 using GraphQL.Common.Models.Payload;
+using GraphQL.Common.Subscriptions;
 using HotChocolate;
+using HotChocolate.Subscriptions;
 using HotChocolate.Types;
 
 namespace GraphQL.Common.Types.Mutations
@@ -12,7 +14,9 @@ namespace GraphQL.Common.Types.Mutations
     {
         public async Task<AddSessionPayload> AddSessionAsync
         (
-            Models.Input.Session input, [Service(ServiceKind.Resolver)] ApplicationDbContext dbContext, CancellationToken cancellationToken
+            Models.Input.Session input,
+            [Service(ServiceKind.Resolver)] ApplicationDbContext dbContext,
+            CancellationToken cancellationToken
         )
         {
             if (string.IsNullOrEmpty(input.Title))
@@ -49,7 +53,9 @@ namespace GraphQL.Common.Types.Mutations
         public async Task<ScheduleSessionPayload> ScheduleSessionAsync
         (
             ScheduleSessionInput input,
-            [Service(ServiceKind.Resolver)] ApplicationDbContext context)
+            [Service(ServiceKind.Resolver)] ApplicationDbContext context,
+            [Service] ITopicEventSender eventSender
+        )
         {
             if (input.EndTime < input.StartTime)
             {
@@ -70,6 +76,10 @@ namespace GraphQL.Common.Types.Mutations
             session.EndTime = input.EndTime;
 
             await context.SaveChangesAsync();
+
+            await eventSender.SendAsync(
+                nameof(SessionSubscriptions.OnSessionScheduledAsync),
+                session.Id);
 
             return new ScheduleSessionPayload(session);
         }

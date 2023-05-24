@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Backend.Common.Data;
 using GraphQL.Common.Loaders;
+using GraphQL.Common.Subscriptions;
 using GraphQL.Common.Types;
 using GraphQL.Common.Types.Mutations;
 using GraphQL.Common.Types.Queries;
@@ -61,6 +62,9 @@ namespace BackEnd
                     .AddTypeExtension<SessionMutations>()
                     .AddTypeExtension<TrackMutations>()
                     .AddTypeExtension<AttendeeMutations>()
+                .AddSubscriptionType(d => d.Name("Subscription"))
+                    .AddTypeExtension<SessionSubscriptions>()
+                    .AddTypeExtension<AttendeeSubscriptions>()
                 .AddType<SpeakerType>()
                 .AddType<AttendeeType>()
                 .AddType<SessionType>()
@@ -68,6 +72,7 @@ namespace BackEnd
                 .AddGlobalObjectIdentification()
                 .AddFiltering()
                 .AddSorting()
+                .AddInMemorySubscriptions()
                 .AddDataLoader<SpeakerByIdDataLoader>()
                 .AddDataLoader<SessionByIdDataLoader>();
         }
@@ -81,6 +86,8 @@ namespace BackEnd
             }
 
             app.UseHttpsRedirection();
+
+            app.UseWebSockets();
 
             app.UseRouting();
 

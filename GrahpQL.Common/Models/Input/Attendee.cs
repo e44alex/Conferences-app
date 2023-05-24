@@ -13,7 +13,7 @@ namespace GraphQL.Common.Models.Input
 
     public record CheckInAttendeeInput
     (
-        [ID(nameof(Session))] int SessionId,
+        [ID(nameof(Backend.Common.Data.Session))] int SessionId,
         [ID(nameof(Attendee))] int AttendeeId
     );
 }

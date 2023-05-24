@@ -12,6 +12,8 @@ namespace GraphQL.Common.Types
     {
         protected override void Configure(IObjectTypeDescriptor<Attendee> descriptor)
         {
+            descriptor.Field(t => t.Id).Type<IdType>().ID(nameof(Attendee));
+
             descriptor
                 .ImplementsNode()
                 .IdField(t => t.Id)
@@ -29,7 +31,7 @@ namespace GraphQL.Common.Types
             public async Task<IEnumerable<Session>> GetSessionsAsync
             (
                 [Parent] Attendee attendee,
-                [ScopedService] ApplicationDbContext dbContext,
+                [Service(ServiceKind.Resolver)] ApplicationDbContext dbContext,
                 SessionByIdDataLoader sessionById,
                 CancellationToken cancellationToken)
             {

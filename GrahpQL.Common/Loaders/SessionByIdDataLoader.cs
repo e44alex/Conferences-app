@@ -11,7 +11,8 @@ namespace GraphQL.Common.Loaders
         public SessionByIdDataLoader
         (
             IBatchScheduler batchScheduler,
-            IDbContextFactory<ApplicationDbContext> dbContextFactory)
+            IDbContextFactory<ApplicationDbContext> dbContextFactory
+        )
             : base(batchScheduler)
         {
             _dbContextFactory = dbContextFactory ??
@@ -21,7 +22,8 @@ namespace GraphQL.Common.Loaders
         protected override async Task<IReadOnlyDictionary<int, Session>> LoadBatchAsync
         (
             IReadOnlyList<int> keys,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken
+        )
         {
             await using ApplicationDbContext dbContext =
                 await _dbContextFactory.CreateDbContextAsync(cancellationToken);

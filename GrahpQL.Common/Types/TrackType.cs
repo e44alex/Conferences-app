@@ -16,12 +16,16 @@ namespace GraphQL.Common.Types
                 .ImplementsNode()
                 .IdField(t => t.Id)
                 .ResolveNode(async (ctx, id) =>
-                    await ctx.RequestServices.GetService<TrackByIdDataLoader>().LoadAsync(id, ctx.RequestAborted));
+                    await ctx.RequestServices.GetService<TrackByIdDataLoader>()?.LoadAsync(id, ctx.RequestAborted)!);
+
+            descriptor
+                .Field(t => t.Name)
+                .UseUpperCase();
 
             descriptor
                 .Field(t => t.Sessions)
                 .ResolveWith<TrackResolvers>(t => t.GetSessionsAsync(default!, default!, default!, default))
-                .UseDbContext<ApplicationDbContext>()
+                .UsePaging<NonNullType<SessionType>>()
                 .Name("sessions");
         }
 
@@ -29,13 +33,13 @@ namespace GraphQL.Common.Types
         {
             public async Task<IEnumerable<Session>> GetSessionsAsync
             (
-                Track track,
+                [Parent] Track track,
                 [Service(ServiceKind.Resolver)] ApplicationDbContext dbContext,
                 SessionByIdDataLoader sessionById,
                 CancellationToken cancellationToken)
             {
                 int[] sessionIds = await dbContext.Sessions
-                    .Where(s => s.Id == track.Id)
+                    .Where(s => s.TrackId == track.Id)
                     .Select(s => s.Id)
                     .ToArrayAsync(cancellationToken);
 

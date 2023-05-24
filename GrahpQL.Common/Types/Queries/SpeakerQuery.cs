@@ -10,7 +10,9 @@ namespace GraphQL.Common.Types.Queries
     [ExtendObjectType("Query")]
     public class SpeakerQueries
     {
-        public Task<List<Speaker>> GetSpeakers([Service(ServiceKind.Resolver)] ApplicationDbContext context) => context.Speakers.ToListAsync();
+        [UsePaging]
+        public IQueryable<Speaker> GetSpeakers([Service(ServiceKind.Resolver)] ApplicationDbContext context) =>
+            context.Speakers.OrderBy(t => t.Name);
 
         public Task<Speaker> GetSpeakerAsync
         (

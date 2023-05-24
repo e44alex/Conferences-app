@@ -10,7 +10,9 @@ namespace GraphQL.Common.Types.Queries
     [ExtendObjectType("Query")]
     public class SessionQueries
     {
-        public Task<List<Session>> GetSessions([Service(ServiceKind.Resolver)] ApplicationDbContext context) => context.Sessions.ToListAsync();
+        [UsePaging(typeof(NonNullType<SessionType>))]
+        public IQueryable<Session> GetSessions([Service(ServiceKind.Resolver)] ApplicationDbContext context) =>
+            context.Sessions;
 
         public Task<Session> GetSessionAsync
         (

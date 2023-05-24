@@ -37,14 +37,15 @@ namespace GraphQL.Common.Types
 
             descriptor
                 .Field(t => t.TrackId)
-                .ID(nameof(Track));
+                .ID(nameof(Track))
+                .Name("track");
         }
 
         private class SessionResolvers
         {
             public async Task<IEnumerable<Speaker>> GetSpeakersAsync
             (
-                Session session,
+                [Parent] Session session,
                 [Service(ServiceKind.Resolver)] ApplicationDbContext dbContext,
                 SpeakerByIdDataLoader speakerByIdData,
                 CancellationToken cancellationToken)
@@ -60,7 +61,7 @@ namespace GraphQL.Common.Types
 
             public async Task<IEnumerable<Attendee>> GetAttendeesAsync
             (
-                Session session,
+                [Parent] Session session,
                 [Service(ServiceKind.Resolver)] ApplicationDbContext dbContext,
                 AttendeeByIdDataLoader attendeeById,
                 CancellationToken cancellationToken)
@@ -76,7 +77,7 @@ namespace GraphQL.Common.Types
 
             public async Task<Track?> GetTrackAsync
             (
-                Session session,
+                [Parent] Session session,
                 TrackByIdDataLoader trackById,
                 CancellationToken cancellationToken)
             {
